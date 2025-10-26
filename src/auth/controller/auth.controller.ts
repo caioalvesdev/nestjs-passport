@@ -23,7 +23,7 @@ export class AuthController {
     @CurrentUser() user: User,
     @Res({ passthrough: true }) response: Response,
   ) {
-    await this.signinAuthService.perform(user, response);
+    return await this.signinAuthService.perform(user, response);
   }
 
   @Post('refresh')
@@ -33,6 +33,6 @@ export class AuthController {
     @CurrentUser() user: User,
     @Res({ passthrough: true }) response: Response,
   ) {
-    await this.signinAuthService.perform(user, response);
+    return await this.signinAuthService.perform(user, response);
   }
 }

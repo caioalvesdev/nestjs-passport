@@ -1,9 +1,15 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { CreateUserRequestDto } from './dto/create-user.request';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
-import { CurrentUser } from 'src/auth/decorator/current-user.decorator';
-import { User } from './schema/user.schema';
 
 @Controller('users')
 export class UsersController {
@@ -15,9 +21,21 @@ export class UsersController {
   }
 
   @Get()
+  @UsePipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    }),
+  )
   @UseGuards(JwtAuthGuard)
-  async getUsers(@CurrentUser() user: User) {
-    console.log({ user });
-    return this.userService.getUsers();
+  async getUsers() {
+    const users = await this.userService.getUsers();
+    console.log({ users });
+    return users;
   }
 }

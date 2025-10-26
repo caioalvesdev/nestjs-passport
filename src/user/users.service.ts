@@ -4,6 +4,7 @@ import { User } from './schema/user.schema';
 import { FilterQuery, Model, UpdateQuery } from 'mongoose';
 import { CreateUserRequestDto } from './dto/create-user.request';
 import { hash } from 'bcryptjs';
+import { FindAllUserResponseDto } from 'src/user/dto/find-all-user.response.dto';
 
 @Injectable()
 export class UsersService {
@@ -26,8 +27,9 @@ export class UsersService {
     return user;
   }
 
-  async getUsers() {
-    return this.userModel.find({});
+  async getUsers(): Promise<Array<FindAllUserResponseDto>> {
+    const response = await this.userModel.find({});
+    return FindAllUserResponseDto.toManyInstance(response);
   }
 
   async updateUser(query: FilterQuery<User>, data: UpdateQuery<User>) {
