@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schema/user.schema';
 import { FilterQuery, Model, UpdateQuery } from 'mongoose';
-import { CreateUserRequest } from './dto/create-user.request';
+import { CreateUserRequestDto } from './dto/create-user.request';
 import { hash } from 'bcryptjs';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class UsersService {
     @InjectModel(User.name) private readonly userModel: Model<User>,
   ) {}
 
-  async create(data: CreateUserRequest) {
+  async create(data: CreateUserRequestDto) {
     await new this.userModel({
       ...data,
       password: await hash(data.password, 10),

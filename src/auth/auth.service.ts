@@ -2,9 +2,9 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcryptjs';
-import { User } from 'src/users/schema/user.schema';
-import { UsersService } from 'src/users/users.service';
-import { TokenPayload } from './token-payload.interface';
+import { User } from 'src/user/schema/user.schema';
+import { UsersService } from 'src/user/users.service';
+import { TokenPayload } from './type/token-payload.interface';
 import { Response } from 'express';
 import { hash } from 'bcryptjs';
 
@@ -32,7 +32,8 @@ export class AuthService {
         ),
     );
     const tokenPayload: TokenPayload = {
-      userId: user._id.toHexString(),
+      id: user._id.toHexString(),
+      email: user.email,
     };
 
     const refreshToken = this.jwtService.sign(tokenPayload, {

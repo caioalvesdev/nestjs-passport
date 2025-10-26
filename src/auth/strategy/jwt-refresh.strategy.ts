@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
-import { TokenPayload } from '../token-payload.interface';
+import { TokenPayload } from '../type/token-payload.interface';
 import type { Request } from 'express';
 import { AuthService } from '../auth.service';
 
@@ -30,7 +30,7 @@ export class JwtRefreshStrategy extends PassportStrategy(
     console.log({ payload });
     return this.authService.verifyUserRefreshToken(
       request.cookies?.Refresh,
-      payload.userId,
+      payload.id,
     );
   }
 }
