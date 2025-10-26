@@ -6,25 +6,24 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { LocalAuthGuard } from './guard/local-auth.guard';
-import { CurrentUser } from './decorator/current-user.decorator';
-import { User } from 'src/user/schema/user.schema';
-import { AuthService } from './auth.service';
 import type { Response } from 'express';
-import { JwtRefreshAuthGuard } from './guard/jwt-refresh-auth.guard';
+import { CurrentUser } from 'src/auth/decorator';
+import { JwtRefreshAuthGuard, LocalAuthGuard } from 'src/auth/guard';
+import { SigninAuthService } from 'src/auth/service';
+import { User } from 'src/user/schema/user.schema';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly signinAuthService: SigninAuthService) {}
 
-  @Post('login')
+  @Post('signin')
   @HttpCode(HttpStatus.OK)
   @UseGuards(LocalAuthGuard)
-  async login(
+  async signin(
     @CurrentUser() user: User,
     @Res({ passthrough: true }) response: Response,
   ) {
-    await this.authService.login(user, response);
+    await this.signinAuthService.perform(user, response);
   }
 
   @Post('refresh')
@@ -34,6 +33,6 @@ export class AuthController {
     @CurrentUser() user: User,
     @Res({ passthrough: true }) response: Response,
   ) {
-    await this.authService.login(user, response);
+    await this.signinAuthService.perform(user, response);
   }
 }
