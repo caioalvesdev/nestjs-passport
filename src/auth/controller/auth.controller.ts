@@ -1,14 +1,20 @@
 import {
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
+  Request,
   Res,
   UseGuards,
 } from '@nestjs/common';
 import type { Response } from 'express';
 import { CurrentUser } from 'src/auth/decorator';
-import { JwtRefreshAuthGuard, LocalAuthGuard } from 'src/auth/guard';
+import {
+  JwtAuthGuard,
+  JwtRefreshAuthGuard,
+  LocalAuthGuard,
+} from 'src/auth/guard';
 import { SigninAuthService } from 'src/auth/service';
 import { User } from 'src/user/schema/user.schema';
 
@@ -22,8 +28,15 @@ export class AuthController {
   async signin(
     @CurrentUser() user: User,
     @Res({ passthrough: true }) response: Response,
-  ) {
+  ): Promise<void> {
     return await this.signinAuthService.perform(user, response);
+  }
+
+  @Get('me')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  async me(@CurrentUser() user: User): Promise<User> {
+    return user;
   }
 
   @Post('refresh')
@@ -32,7 +45,15 @@ export class AuthController {
   async refresh(
     @CurrentUser() user: User,
     @Res({ passthrough: true }) response: Response,
-  ) {
+  ): Promise<void> {
     return await this.signinAuthService.perform(user, response);
+  }
+
+  @UseGuards(LocalAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @Post('logout')
+  async logout(@Request() req: any): Promise<void> {
+    console.log('logout called');
+    return req.logout();
   }
 }
