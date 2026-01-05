@@ -1,8 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { Types } from 'mongoose';
 import { UserDomain } from 'src/modules/user/domain/user.domain';
-import { CreateUserRequestDTO } from 'src/modules/user/dto/request/create-user.request.dto';
-import { CreateUserResponseDTO } from 'src/modules/user/dto/response/create-user.response.dto';
+import { CreateUserRequestDTO } from 'src/modules/user/dto/request';
+import { CreateUserResponseDTO } from 'src/modules/user/dto/response';
 import { Email } from 'src/modules/user/object-value/email.object-value';
 import type { PasswordHasher } from 'src/modules/user/provider/password-hasher.provider';
 import { UserRepository } from 'src/modules/user/repository/user.repository';
@@ -17,9 +17,14 @@ export class CreateUserService {
   ) {}
 
   public async perform(request: CreateUserRequestDTO): Promise<CreateUserResponseDTO> {
+    const email = Email.create(request.email);
+    const existingUser = await this.userRepository.findByEmail(email);
+
+    if (existingUser) throw new ConflictException('User with this email already exists');
+
     const user = UserDomain.create({
       id: new Types.ObjectId().toHexString(),
-      email: Email.create(request.email),
+      email,
       password: await this.passwordHasherProvider.hash(request.password),
     });
 
