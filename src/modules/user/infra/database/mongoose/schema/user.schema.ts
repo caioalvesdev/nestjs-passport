@@ -4,16 +4,19 @@ import { SchemaTypes, Types } from 'mongoose';
 @Schema()
 export class User {
   @Prop({ type: SchemaTypes.ObjectId, auto: true })
-  readonly _id: Types.ObjectId;
+  public readonly _id: Types.ObjectId;
+
+  @Prop()
+  public readonly name: string;
 
   @Prop({ unique: true })
-  readonly email: string;
+  public readonly email: string;
 
   @Prop()
-  readonly refreshToken?: string;
+  public readonly refreshToken?: string;
 
   @Prop()
-  readonly password: string;
+  public readonly password: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

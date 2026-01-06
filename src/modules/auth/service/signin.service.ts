@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { TokenPayload } from 'src/modules/auth/type/token-payload.interface';
-import { User } from 'src/modules/user/schema/user.schema';
+import { User } from 'src/modules/user/infra/database/mongoose/schema/user.schema';
 import { UsersService } from 'src/modules/user/users.service';
 import { Response } from 'express';
 import { hash } from 'bcryptjs';
@@ -22,16 +22,12 @@ export class SigninAuthService {
       const expiresAccessToken = new Date();
       expiresAccessToken.setMilliseconds(
         expiresAccessToken.getTime() +
-          parseInt(
-            this.configService.getOrThrow('JWT_ACCESS_TOKEN_EXPIRATION_MS'),
-          ),
+          parseInt(this.configService.getOrThrow('JWT_ACCESS_TOKEN_EXPIRATION_MS')),
       );
       const expiresRefreshToken = new Date();
       expiresRefreshToken.setMilliseconds(
         expiresRefreshToken.getTime() +
-          parseInt(
-            this.configService.getOrThrow('JWT_REFRESH_TOKEN_EXPIRATION_MS'),
-          ),
+          parseInt(this.configService.getOrThrow('JWT_REFRESH_TOKEN_EXPIRATION_MS')),
       );
       const tokenPayload: TokenPayload = {
         id: user._id.toHexString(),
@@ -40,16 +36,12 @@ export class SigninAuthService {
 
       const refreshToken = this.jwtService.sign(tokenPayload, {
         secret: this.configService.getOrThrow('JWT_REFRESH_TOKEN_SECRET'),
-        expiresIn: `${this.configService.getOrThrow(
-          'JWT_REFRESH_TOKEN_EXPIRATION_MS',
-        )}ms`,
+        expiresIn: `${this.configService.getOrThrow('JWT_REFRESH_TOKEN_EXPIRATION_MS')}ms`,
       });
 
       const accessToken = this.jwtService.sign(tokenPayload, {
         secret: this.configService.getOrThrow('JWT_ACCESS_TOKEN_SECRET'),
-        expiresIn: `${this.configService.getOrThrow(
-          'JWT_ACCESS_TOKEN_EXPIRATION_MS',
-        )}ms`,
+        expiresIn: `${this.configService.getOrThrow('JWT_ACCESS_TOKEN_EXPIRATION_MS')}ms`,
       });
 
       await this.userService.updateUser(

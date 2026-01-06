@@ -1,0 +1,13 @@
+import { UserEntity } from 'src/modules/user/domain/entity/user.entity';
+import { Email } from 'src/modules/user/domain/value-object/email.vo';
+
+export const USER_REPOSITORY = Symbol('USER_REPOSITORY');
+
+export interface UserRepository {
+  findAll(): Promise<Array<UserEntity>>;
+  findByEmail(email: Email): Promise<UserEntity | null>;
+  findById(id: string): Promise<UserEntity | null>;
+  create(user: UserEntity): Promise<void>;
+  update(user: UserEntity): Promise<void>;
+  delete(id: string): Promise<void>;
+}

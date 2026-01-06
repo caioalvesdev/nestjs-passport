@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from './schema/user.schema';
+import { User } from './infra/database/mongoose/schema/user.schema';
 import { FilterQuery, Model, UpdateQuery } from 'mongoose';
-import { CreateUserRequestDTO } from './dto/request/create-user.request.dto';
+import { CreateUserRequestDTO } from './presentation/dto/request/create-user.request.dto';
 import { hash } from 'bcryptjs';
-import { ListUserResponseDTO } from 'src/modules/user/dto/response/list-user.response.dto';
+import { ListUserResponseDTO } from 'src/modules/user/presentation/dto/response/list-user.response.dto';
 
 @Injectable()
 export class UsersService {

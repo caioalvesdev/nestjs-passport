@@ -1,14 +1,21 @@
 import { Module } from '@nestjs/common';
-import { UserController } from './controller/user.controller';
+import { UserController } from './presentation/controller/user.controller';
 import { UsersService } from './users.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from './schema/user.schema';
-import { use } from 'passport';
-import { TOKENS } from 'src/shared/common/constant/tokens.constant';
-import { BycriptPasswordHasherProvider } from 'src/modules/user/provider/password-hasher.provider';
-import { CreateUserService } from 'src/modules/user/service/create-user.service';
-import { UserRepository } from 'src/modules/user/repository/user.repository';
-import { ListUserService } from 'src/modules/user/service/list-user.service';
+import { User, UserSchema } from './infra/database/mongoose/schema/user.schema';
+import {
+  BycriptPasswordHasherService,
+  PASSWORD_HASHER,
+} from 'src/modules/user/infra/service/password-hasher.service';
+import { MongooseUserRepository } from 'src/modules/user/infra/database/mongoose/user.orm.repository';
+import {
+  CreateUserUseCase,
+  ListUserUseCase,
+  FindUserUseCase,
+  UpdateUserUseCase,
+  DeleteUserUseCase,
+} from 'src/modules/user/application/use-case';
+import { USER_REPOSITORY } from 'src/modules/user/domain/repository';
 
 @Module({
   imports: [
@@ -22,12 +29,18 @@ import { ListUserService } from 'src/modules/user/service/list-user.service';
   controllers: [UserController],
   providers: [
     UsersService,
-    CreateUserService,
-    ListUserService,
-    UserRepository,
+    CreateUserUseCase,
+    ListUserUseCase,
+    FindUserUseCase,
+    UpdateUserUseCase,
+    DeleteUserUseCase,
     {
-      provide: TOKENS.PASSWORD_HASHER,
-      useClass: BycriptPasswordHasherProvider,
+      provide: PASSWORD_HASHER,
+      useClass: BycriptPasswordHasherService,
+    },
+    {
+      provide: USER_REPOSITORY,
+      useClass: MongooseUserRepository,
     },
   ],
   exports: [UsersService],

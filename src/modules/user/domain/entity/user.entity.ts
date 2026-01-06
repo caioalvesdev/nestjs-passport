@@ -1,33 +1,26 @@
-import { Email } from 'src/modules/user/object-value/email.object-value';
+import { Email } from 'src/modules/user/domain/value-object/email.vo';
 
-export class UserDomain {
+export class UserEntity {
   private constructor(
     private readonly id: string,
+    private name: string,
     private readonly email: Email,
-    private readonly password: string,
+    private password: string,
     private readonly refreshToken: string | null = null,
   ) {}
 
   public static create(props: {
     id: string;
+    name: string;
     email: Email;
     password: string;
     refreshToken?: string | null;
-  }): UserDomain {
+  }): UserEntity {
     this.validate(props);
-    return new UserDomain(
-      props.id,
-      props.email,
-      props.password,
-      props.refreshToken,
-    );
+    return new UserEntity(props.id, props.name, props.email, props.password, props.refreshToken);
   }
 
-  private static validate(props: {
-    id: string;
-    email: Email;
-    password: string;
-  }) {
+  private static validate(props: { id: string; email: Email; password: string }) {
     if (!props.id) throw new Error('ID is required');
     if (!props.email) throw new Error('Email is required');
     if (!props.email.getValue()) throw new Error('Email value is required');
@@ -36,6 +29,10 @@ export class UserDomain {
 
   public getId(): string {
     return this.id;
+  }
+
+  public getName(): string {
+    return this.name;
   }
 
   public getEmail(): Email {
@@ -50,9 +47,18 @@ export class UserDomain {
     return this.refreshToken;
   }
 
+  public setPassword(password: string): void {
+    this.password = password;
+  }
+
+  public setName(name: string): void {
+    this.name = name;
+  }
+
   public toJSON() {
     return {
       id: this.id,
+      name: this.name,
       email: this.email.getValue(),
       password: this.password,
       refreshToken: this.refreshToken,

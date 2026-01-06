@@ -12,7 +12,7 @@ import type { Response } from 'express';
 import { CurrentUser } from 'src/modules/auth/decorator';
 import { JwtAuthGuard, JwtRefreshAuthGuard, LocalAuthGuard } from 'src/modules/auth/guard';
 import { SigninAuthService } from 'src/modules/auth/service';
-import { User } from 'src/modules/user/schema/user.schema';
+import { User } from 'src/modules/user/infra/database/mongoose/schema/user.schema';
 
 @Controller('auth')
 export class AuthController {
