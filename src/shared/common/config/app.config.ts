@@ -1,9 +1,9 @@
-import { INestApplication, VersioningType } from '@nestjs/common';
+import { INestApplication, Logger, VersioningType } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 
 export class AppConfig {
-  public static readonly PORT = process.env.APP_PORT || 3000;
+  private static readonly logger: Logger = new Logger(AppConfig.name);
 
   public static async configure(app: INestApplication): Promise<void> {
     app.setGlobalPrefix('api');
@@ -12,5 +12,6 @@ export class AppConfig {
     app.use(helmet());
     app.use(cookieParser());
     await app.listen(process.env.PORT ?? 3000);
+    this.logger.log(`Application is running on: ${await app.getUrl()}`);
   }
 }

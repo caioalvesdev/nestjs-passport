@@ -5,12 +5,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from '@modules/user/user.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { JwtAuthGuard } from '@modules/auth/infrastructure/guard';
+import { ModuleConfig } from '@shared/common/config/module.config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
+    ConfigModule.forRoot(ModuleConfig.configure()),
     MongooseModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         uri: configService.getOrThrow<string>('MONGODB_URI'),
