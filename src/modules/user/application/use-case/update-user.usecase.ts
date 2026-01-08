@@ -3,7 +3,7 @@ import { USER_REPOSITORY, type UserRepository } from 'src/modules/user/domain/re
 import {
   PASSWORD_HASHER,
   type PasswordHasher,
-} from 'src/modules/user/infra/service/password-hasher.service';
+} from 'src/modules/user/infrastructure/service/password-hasher.service';
 import { UpdateUserRequestDTO } from 'src/modules/user/presentation/dto/request';
 import { UpdateUserResponseDTO } from 'src/modules/user/presentation/dto/response';
 

@@ -2,18 +2,18 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 import { BaseDTO } from 'src/modules/user/presentation/dto/base.dto';
 
-export class ListUserResponseDTO extends BaseDTO {
+export class UserResponseDTO extends BaseDTO {
   @ApiProperty()
   @Expose()
   public readonly id: string;
 
   @ApiProperty()
   @Expose()
-  public readonly name: string;
+  public readonly email: string;
 
   @ApiProperty()
   @Expose()
-  public readonly email: string;
+  public readonly name: string;
 
   @ApiProperty()
   @Expose()

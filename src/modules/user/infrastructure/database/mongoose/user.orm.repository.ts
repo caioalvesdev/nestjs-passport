@@ -4,11 +4,14 @@ import { Model } from 'mongoose';
 import { UserEntity } from 'src/modules/user/domain/entity/user.entity';
 import { UserRepository } from 'src/modules/user/domain/repository/user.repository.interface';
 import { Email } from 'src/modules/user/domain/value-object/email.vo';
-import { User } from 'src/modules/user/infra/database/mongoose/schema/user.schema';
+import { User } from 'src/modules/user/infrastructure/database/mongoose/schema/user.schema';
 
 @Injectable()
 export class MongooseUserRepository implements UserRepository {
-  constructor(@InjectModel(User.name) private readonly userModel: Model<User>) {}
+  constructor(
+    @InjectModel(User.name)
+    private readonly userModel: Model<User>,
+  ) {}
 
   public async findAll(): Promise<Array<UserEntity>> {
     return (await this.userModel.find()).map((user) =>

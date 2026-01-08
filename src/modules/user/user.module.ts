@@ -2,12 +2,6 @@ import { Module } from '@nestjs/common';
 import { UserController } from './presentation/controller/user.controller';
 import { UsersService } from './users.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from './infra/database/mongoose/schema/user.schema';
-import {
-  BycriptPasswordHasherService,
-  PASSWORD_HASHER,
-} from 'src/modules/user/infra/service/password-hasher.service';
-import { MongooseUserRepository } from 'src/modules/user/infra/database/mongoose/user.orm.repository';
 import {
   CreateUserUseCase,
   ListUserUseCase,
@@ -16,6 +10,15 @@ import {
   DeleteUserUseCase,
 } from 'src/modules/user/application/use-case';
 import { USER_REPOSITORY } from 'src/modules/user/domain/repository';
+import {
+  User,
+  UserSchema,
+} from 'src/modules/user/infrastructure/database/mongoose/schema/user.schema';
+import {
+  BycriptPasswordHasherService,
+  PASSWORD_HASHER,
+} from 'src/modules/user/infrastructure/service/password-hasher.service';
+import { MongooseUserRepository } from 'src/modules/user/infrastructure/database/mongoose/user.orm.repository';
 
 @Module({
   imports: [
@@ -43,6 +46,6 @@ import { USER_REPOSITORY } from 'src/modules/user/domain/repository';
       useClass: MongooseUserRepository,
     },
   ],
-  exports: [UsersService],
+  exports: [UsersService, USER_REPOSITORY, FindUserUseCase],
 })
 export class UsersModule {}

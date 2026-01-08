@@ -10,7 +10,9 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/modules/auth/guard';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { IsPublic } from 'src/modules/auth/infrastructure/decorator';
+import { JwtAuthGuard } from 'src/modules/auth/infrastructure/guard';
 import {
   CreateUserUseCase,
   DeleteUserUseCase,
@@ -28,6 +30,8 @@ import {
   UpdateUserResponseDTO,
 } from 'src/modules/user/presentation/dto/response';
 
+@ApiBearerAuth('KEY_AUTH')
+@ApiTags('Users')
 @Controller('users')
 export class UserController {
   constructor(
@@ -40,27 +44,29 @@ export class UserController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  @UseGuards(JwtAuthGuard)
+  @ApiResponse({ status: HttpStatus.OK, type: [ListUserResponseDTO] })
   public async list(): Promise<Array<ListUserResponseDTO>> {
     return this.listUserService.execute();
   }
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(JwtAuthGuard)
+  @ApiResponse({ status: HttpStatus.OK, type: ListUserResponseDTO })
   public async find(@Param('id') id: string): Promise<ListUserResponseDTO> {
     return this.findUserService.execute(id);
   }
 
+  @IsPublic()
   @Post()
   @HttpCode(HttpStatus.CREATED)
+  @ApiResponse({ status: HttpStatus.CREATED, type: CreateUserResponseDTO })
   public async create(@Body() request: CreateUserRequestDTO): Promise<CreateUserResponseDTO> {
     return this.createUserService.execute(request);
   }
 
   @Put(':id')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(JwtAuthGuard)
+  @ApiResponse({ status: HttpStatus.OK, type: UpdateUserResponseDTO })
   public async update(
     @Param('id') id: string,
     @Body() request: UpdateUserRequestDTO,
@@ -70,7 +76,7 @@ export class UserController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @UseGuards(JwtAuthGuard)
+  @ApiResponse({ status: HttpStatus.NO_CONTENT })
   public async delete(@Param('id') id: string): Promise<void> {
     return this.deleteUserService.execute(id);
   }

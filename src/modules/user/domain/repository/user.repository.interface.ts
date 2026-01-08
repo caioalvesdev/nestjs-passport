@@ -7,6 +7,7 @@ export interface UserRepository {
   findAll(): Promise<Array<UserEntity>>;
   findByEmail(email: Email): Promise<UserEntity | null>;
   findById(id: string): Promise<UserEntity | null>;
+  updateRefreshToken(id: string, refreshToken: string | null): Promise<void>;
   create(user: UserEntity): Promise<void>;
   update(user: UserEntity): Promise<void>;
   delete(id: string): Promise<void>;

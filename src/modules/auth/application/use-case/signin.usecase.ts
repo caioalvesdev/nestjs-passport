@@ -1,36 +1,39 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { TokenPayload } from 'src/modules/auth/type/token-payload.interface';
-import { User } from 'src/modules/user/infra/database/mongoose/schema/user.schema';
-import { UsersService } from 'src/modules/user/users.service';
-import { Response } from 'express';
 import { hash } from 'bcryptjs';
+import { Response } from 'express';
+import { ICurrentUser } from 'src/modules/auth/infrastructure/decorator';
+import { TokenPayload } from 'src/modules/auth/type/token-payload.interface';
+import { USER_REPOSITORY, type UserRepository } from 'src/modules/user/domain/repository';
 
 @Injectable()
-export class SigninAuthService {
-  private readonly logger: Logger = new Logger(SigninAuthService.name);
+export class SigninAuthUseCase {
+  private readonly logger: Logger = new Logger(SigninAuthUseCase.name);
 
   constructor(
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
-    private readonly userService: UsersService,
+    @Inject(USER_REPOSITORY)
+    private readonly userRepository: UserRepository,
   ) {}
 
-  async perform(user: User, response: Response) {
+  public async execute(user: ICurrentUser, response: Response): Promise<void> {
     try {
       const expiresAccessToken = new Date();
       expiresAccessToken.setMilliseconds(
         expiresAccessToken.getTime() +
           parseInt(this.configService.getOrThrow('JWT_ACCESS_TOKEN_EXPIRATION_MS')),
       );
+
       const expiresRefreshToken = new Date();
       expiresRefreshToken.setMilliseconds(
         expiresRefreshToken.getTime() +
           parseInt(this.configService.getOrThrow('JWT_REFRESH_TOKEN_EXPIRATION_MS')),
       );
+
       const tokenPayload: TokenPayload = {
-        id: user._id.toHexString(),
+        id: user.id,
         email: user.email,
       };
 
@@ -44,10 +47,7 @@ export class SigninAuthService {
         expiresIn: `${this.configService.getOrThrow('JWT_ACCESS_TOKEN_EXPIRATION_MS')}ms`,
       });
 
-      await this.userService.updateUser(
-        { _id: user._id },
-        { $set: { refreshToken: await hash(refreshToken, 10) } },
-      );
+      await this.userRepository.updateRefreshToken(user.id, await hash(refreshToken, 10));
 
       response.cookie('Authentication', accessToken, {
         httpOnly: true,
@@ -60,6 +60,8 @@ export class SigninAuthService {
         expires: expiresRefreshToken,
         secure: this.configService.get('NODE_ENV') === 'production',
       });
+
+      this.logger.log(`User with ID: ${user.id} signed in successfully`);
     } catch (error) {
       this.logger.error(error);
       throw error;

@@ -1,6 +1,13 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 
-const getUserFromContext = (context: ExecutionContext) => {
+export interface ICurrentUser {
+  id: string;
+  email: string;
+  name: string;
+  refreshToken: string | null;
+}
+
+const getUserFromContext = (context: ExecutionContext): ICurrentUser => {
   return context.switchToHttp().getRequest()?.user;
 };
 

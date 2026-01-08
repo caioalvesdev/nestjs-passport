@@ -6,7 +6,7 @@ import { Email } from 'src/modules/user/domain/value-object';
 import {
   PASSWORD_HASHER,
   type PasswordHasher,
-} from 'src/modules/user/infra/service/password-hasher.service';
+} from 'src/modules/user/infrastructure/service/password-hasher.service';
 import { CreateUserRequestDTO } from 'src/modules/user/presentation/dto/request';
 import { CreateUserResponseDTO } from 'src/modules/user/presentation/dto/response';
 
