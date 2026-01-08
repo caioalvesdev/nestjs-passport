@@ -1,11 +1,11 @@
+import { ValidateUserRefreshTokenAuthUseCase } from '@modules/auth/application/use-case';
+import { UserResponseDTO } from '@modules/auth/presentation/dto/response';
+import { TokenPayload } from '@modules/auth/type/token-payload.interface';
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import type { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { ValidateUserRefreshTokenAuthUseCase } from 'src/modules/auth/application/use-case';
-import { UserResponseDTO } from 'src/modules/auth/presentation/dto/response';
-import { TokenPayload } from 'src/modules/auth/type/token-payload.interface';
 
 @Injectable()
 export class JwtRefreshStrategy

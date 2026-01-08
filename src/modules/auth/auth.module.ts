@@ -1,20 +1,20 @@
-import { Module } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
-import { PassportModule } from '@nestjs/passport';
-import { AuthController } from 'src/modules/auth/presentation/controller';
-import { JwtRefreshAuthGuard } from 'src/modules/auth/infrastructure/guard';
 import {
-  CurrentUserUseCase,
   SigninAuthUseCase,
   ValidateUserAuthUseCase,
   ValidateUserRefreshTokenAuthUseCase,
-} from 'src/modules/auth/application/use-case';
-import { UsersModule } from 'src/modules/user/user.module';
+  CurrentUserUseCase,
+} from '@modules/auth/application/use-case';
+import { JwtRefreshAuthGuard } from '@modules/auth/infrastructure/guard';
 import {
-  JwtRefreshStrategy,
-  JwtStrategy,
   LocalStrategy,
-} from 'src/modules/auth/infrastructure/strategy';
+  JwtStrategy,
+  JwtRefreshStrategy,
+} from '@modules/auth/infrastructure/strategy';
+import { AuthController } from '@modules/auth/presentation/controller';
+import { UsersModule } from '@modules/user/user.module';
+import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [UsersModule, PassportModule, JwtModule],

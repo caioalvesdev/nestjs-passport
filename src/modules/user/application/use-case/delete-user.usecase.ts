@@ -1,5 +1,5 @@
+import { USER_REPOSITORY, type UserRepository } from '@modules/user/domain/repository';
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { USER_REPOSITORY, type UserRepository } from 'src/modules/user/domain/repository';
 
 @Injectable()
 export class DeleteUserUseCase {

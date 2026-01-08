@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { AppConfig, SwaggerConfig, ValidationPipeConfig } from 'src/shared/common/config';
-import { AppModule } from './app.module';
+import { ValidationPipeConfig, SwaggerConfig, AppConfig } from '@shared/common/config';
+import { AppModule } from 'src/app.module';
 
 class NestJSBootstrapApplication {
   public static async start(): Promise<void> {

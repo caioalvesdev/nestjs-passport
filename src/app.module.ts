@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
-import { UsersModule } from './modules/user/user.module';
-import { AuthModule } from './modules/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
-import { JwtAuthGuard } from 'src/modules/auth/infrastructure/guard';
+import { MongooseModule } from '@nestjs/mongoose';
+import { UsersModule } from '@modules/user/user.module';
+import { AuthModule } from '@modules/auth/auth.module';
+import { JwtAuthGuard } from '@modules/auth/infrastructure/guard';
 
 @Module({
   imports: [

@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { TransformerUtil } from '@shared/common/util';
 import { Expose } from 'class-transformer';
-import { IsEmail, IsNotEmpty, IsStrongPassword } from 'class-validator';
+import { IsNotEmpty, IsStrongPassword } from 'class-validator';
 
-export class UpdateUserRequestDTO {
+export class UpdateUserRequestDTO extends TransformerUtil {
   @IsNotEmpty()
   @ApiProperty()
   @Expose()

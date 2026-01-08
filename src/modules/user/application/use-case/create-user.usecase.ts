@@ -1,14 +1,14 @@
-import { ConflictException, Inject, Injectable, Logger } from '@nestjs/common';
-import { Types } from 'mongoose';
-import { UserEntity } from 'src/modules/user/domain/entity';
-import { USER_REPOSITORY, type UserRepository } from 'src/modules/user/domain/repository';
-import { Email } from 'src/modules/user/domain/value-object';
+import { UserEntity } from '@modules/user/domain/entity';
+import { USER_REPOSITORY, type UserRepository } from '@modules/user/domain/repository';
+import { Email } from '@modules/user/domain/value-object';
 import {
   PASSWORD_HASHER,
   type PasswordHasher,
-} from 'src/modules/user/infrastructure/service/password-hasher.service';
-import { CreateUserRequestDTO } from 'src/modules/user/presentation/dto/request';
-import { CreateUserResponseDTO } from 'src/modules/user/presentation/dto/response';
+} from '@modules/user/infrastructure/service/password-hasher.service';
+import { CreateUserRequestDTO } from '@modules/user/presentation/dto/request';
+import { CreateUserResponseDTO } from '@modules/user/presentation/dto/response';
+import { ConflictException, Inject, Injectable, Logger } from '@nestjs/common';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class CreateUserUseCase {

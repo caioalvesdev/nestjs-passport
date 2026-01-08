@@ -1,11 +1,7 @@
-import {
-  ClassConstructor,
-  plainToInstance,
-  instanceToPlain,
-} from 'class-transformer';
+import { ClassConstructor, plainToInstance, instanceToPlain } from 'class-transformer';
 
-export abstract class BaseDTO {
-  static toInstance<T extends BaseDTO>(
+export abstract class TransformerUtil {
+  static toInstance<T extends TransformerUtil>(
     this: ClassConstructor<T>,
     data: Record<string, any>,
   ): T {
@@ -15,7 +11,7 @@ export abstract class BaseDTO {
     });
   }
 
-  static toManyInstance<T extends BaseDTO>(
+  static toManyInstance<T extends TransformerUtil>(
     this: ClassConstructor<T>,
     data: Array<Record<string, any>>,
   ): Array<T> {

@@ -1,7 +1,7 @@
+import { UserResponseDTO } from '@modules/auth/presentation/dto/response';
+import { USER_REPOSITORY, type UserRepository } from '@modules/user/domain/repository';
 import { Inject, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { compare } from 'bcryptjs';
-import { UserResponseDTO } from 'src/modules/auth/presentation/dto/response';
-import { USER_REPOSITORY, type UserRepository } from 'src/modules/user/domain/repository';
 
 @Injectable()
 export class ValidateUserRefreshTokenAuthUseCase {

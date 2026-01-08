@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { TransformerUtil } from '@shared/common/util';
 import { Expose } from 'class-transformer';
-import { BaseDTO } from 'src/modules/user/presentation/dto/base.dto';
 
-export class ListUserResponseDTO extends BaseDTO {
+export class ListUserResponseDTO extends TransformerUtil {
   @ApiProperty()
   @Expose()
   public readonly id: string;

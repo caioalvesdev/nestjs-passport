@@ -1,3 +1,17 @@
+import { IsPublic } from '@modules/auth/infrastructure/decorator';
+import {
+  CreateUserUseCase,
+  ListUserUseCase,
+  UpdateUserUseCase,
+  FindUserUseCase,
+  DeleteUserUseCase,
+} from '@modules/user/application/use-case';
+import { CreateUserRequestDTO, UpdateUserRequestDTO } from '@modules/user/presentation/dto/request';
+import {
+  ListUserResponseDTO,
+  CreateUserResponseDTO,
+  UpdateUserResponseDTO,
+} from '@modules/user/presentation/dto/response';
 import {
   Body,
   Controller,
@@ -8,27 +22,8 @@ import {
   Param,
   Post,
   Put,
-  UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { IsPublic } from 'src/modules/auth/infrastructure/decorator';
-import { JwtAuthGuard } from 'src/modules/auth/infrastructure/guard';
-import {
-  CreateUserUseCase,
-  DeleteUserUseCase,
-  FindUserUseCase,
-  ListUserUseCase,
-  UpdateUserUseCase,
-} from 'src/modules/user/application/use-case';
-import {
-  CreateUserRequestDTO,
-  UpdateUserRequestDTO,
-} from 'src/modules/user/presentation/dto/request';
-import {
-  CreateUserResponseDTO,
-  ListUserResponseDTO,
-  UpdateUserResponseDTO,
-} from 'src/modules/user/presentation/dto/response';
 
 @ApiBearerAuth('KEY_AUTH')
 @ApiTags('Users')

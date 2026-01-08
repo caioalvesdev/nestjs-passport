@@ -1,8 +1,8 @@
+import { ValidateUserAuthUseCase } from '@modules/auth/application/use-case';
+import { UserResponseDTO } from '@modules/auth/presentation/dto/response';
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
-import { ValidateUserAuthUseCase } from 'src/modules/auth/application/use-case';
-import { UserResponseDTO } from 'src/modules/auth/presentation/dto/response';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) implements OnModuleInit {

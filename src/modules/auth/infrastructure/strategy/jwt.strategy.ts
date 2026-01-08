@@ -1,11 +1,11 @@
+import { UserResponseDTO } from '@modules/auth/presentation/dto/response';
+import { TokenPayload } from '@modules/auth/type/token-payload.interface';
+import { USER_REPOSITORY, type UserRepository } from '@modules/user/domain/repository';
 import { Inject, Injectable, Logger, OnModuleInit, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import type { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { UserResponseDTO } from 'src/modules/auth/presentation/dto/response';
-import { TokenPayload } from 'src/modules/auth/type/token-payload.interface';
-import { USER_REPOSITORY, type UserRepository } from 'src/modules/user/domain/repository';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) implements OnModuleInit {

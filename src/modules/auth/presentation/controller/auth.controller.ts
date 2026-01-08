@@ -1,3 +1,7 @@
+import { SigninAuthUseCase, CurrentUserUseCase } from '@modules/auth/application/use-case';
+import { IsPublic, CurrentUser, type ICurrentUser } from '@modules/auth/infrastructure/decorator';
+import { LocalAuthGuard, JwtRefreshAuthGuard } from '@modules/auth/infrastructure/guard';
+import { UserResponseDTO } from '@modules/auth/presentation/dto/response';
 import {
   Controller,
   Get,
@@ -10,14 +14,6 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import type { Response } from 'express';
-import { CurrentUserUseCase, SigninAuthUseCase } from 'src/modules/auth/application/use-case';
-import {
-  CurrentUser,
-  IsPublic,
-  type ICurrentUser,
-} from 'src/modules/auth/infrastructure/decorator';
-import { JwtRefreshAuthGuard, LocalAuthGuard } from 'src/modules/auth/infrastructure/guard';
-import { UserResponseDTO } from 'src/modules/auth/presentation/dto/response';
 
 @ApiBearerAuth('KEY_AUTH')
 @ApiTags('Auth')

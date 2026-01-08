@@ -1,10 +1,10 @@
+import { UserEntity } from '@modules/user/domain/entity';
+import { UserRepository } from '@modules/user/domain/repository';
+import { Email } from '@modules/user/domain/value-object';
+import { User } from '@modules/user/infrastructure/database/mongoose/schema';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UserEntity } from 'src/modules/user/domain/entity/user.entity';
-import { UserRepository } from 'src/modules/user/domain/repository/user.repository.interface';
-import { Email } from 'src/modules/user/domain/value-object/email.vo';
-import { User } from 'src/modules/user/infrastructure/database/mongoose/schema/user.schema';
 
 @Injectable()
 export class MongooseUserRepository implements UserRepository {
