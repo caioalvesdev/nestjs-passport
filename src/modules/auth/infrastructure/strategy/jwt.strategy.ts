@@ -1,6 +1,6 @@
 import { UserResponseDTO } from '@modules/auth/presentation/dto/response';
 import { TokenPayload } from '@modules/auth/type/token-payload.interface';
-import { USER_REPOSITORY, type UserRepository } from '@modules/user/domain/repository';
+import { USER_REPOSITORY, type IUserRepository } from '@modules/user/domain/repository';
 import { Inject, Injectable, Logger, OnModuleInit, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
@@ -14,7 +14,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) implements OnModuleI
   constructor(
     public readonly configService: ConfigService,
     @Inject(USER_REPOSITORY)
-    private readonly userRepository: UserRepository,
+    private readonly userRepository: IUserRepository,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([

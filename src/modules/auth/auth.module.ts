@@ -3,6 +3,7 @@ import {
   ValidateUserAuthUseCase,
   ValidateUserRefreshTokenAuthUseCase,
   CurrentUserUseCase,
+  SignupAuthUseCase,
 } from '@modules/auth/application/use-case';
 import { JwtRefreshAuthGuard } from '@modules/auth/infrastructure/guard';
 import {
@@ -25,9 +26,10 @@ import { PassportModule } from '@nestjs/passport';
     JwtRefreshStrategy,
     JwtRefreshAuthGuard,
     SigninAuthUseCase,
+    SignupAuthUseCase,
     ValidateUserAuthUseCase,
     ValidateUserRefreshTokenAuthUseCase,
     CurrentUserUseCase,
   ],
 })
-export class AuthModule {}
+export class AuthModule { }

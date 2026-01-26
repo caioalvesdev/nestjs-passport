@@ -5,7 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from '@modules/user/user.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { JwtAuthGuard } from '@modules/auth/infrastructure/guard';
-import { ModuleConfig } from '@shared/common/config/module.config';
+import { ModuleConfig } from 'src/core/config';
 
 @Module({
   imports: [
@@ -26,4 +26,4 @@ import { ModuleConfig } from '@shared/common/config/module.config';
     },
   ],
 })
-export class AppModule {}
+export class CoreModule {}

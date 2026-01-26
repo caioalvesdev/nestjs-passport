@@ -3,13 +3,13 @@ import { compare, hash } from 'bcryptjs';
 
 export const PASSWORD_HASHER = Symbol('PASSWORD_HASHER');
 
-export interface PasswordHasher {
+export interface IPasswordHasher {
   hash(password: string): Promise<string>;
   compare(password: string, hashedPassword: string): Promise<boolean>;
 }
 
 @Injectable()
-export class BycriptPasswordHasherService implements PasswordHasher {
+export class BycriptPasswordHasherService implements IPasswordHasher {
   public async hash(password: string): Promise<string> {
     return hash(password, 10);
   }

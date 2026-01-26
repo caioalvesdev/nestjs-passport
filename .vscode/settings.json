@@ -1,10 +1,12 @@
 {
-    "editor.fontSize": 12,
+    "editor.fontSize": 12.6,
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit"
     },
-    "eslint.validate": ["json"],
+    "eslint.validate": [
+        "json"
+    ],
     "eslint.enable": true,
     "[javascript, typescript]": {
         "editor.formatOnSave": true

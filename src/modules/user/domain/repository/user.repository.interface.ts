@@ -3,7 +3,7 @@ import { Email } from 'src/modules/user/domain/value-object/email.vo';
 
 export const USER_REPOSITORY = Symbol('USER_REPOSITORY');
 
-export interface UserRepository {
+export interface IUserRepository {
   findAll(): Promise<Array<UserEntity>>;
   findByEmail(email: Email): Promise<UserEntity | null>;
   findById(id: string): Promise<UserEntity | null>;

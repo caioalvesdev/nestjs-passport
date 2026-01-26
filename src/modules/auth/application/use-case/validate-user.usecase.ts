@@ -1,5 +1,5 @@
 import { UserResponseDTO } from '@modules/auth/presentation/dto/response';
-import { USER_REPOSITORY, type UserRepository } from '@modules/user/domain/repository';
+import { USER_REPOSITORY, type IUserRepository } from '@modules/user/domain/repository';
 import { Email } from '@modules/user/domain/value-object';
 import { Inject, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { compare } from 'bcryptjs';
@@ -10,8 +10,8 @@ export class ValidateUserAuthUseCase {
 
   constructor(
     @Inject(USER_REPOSITORY)
-    private readonly userRepository: UserRepository,
-  ) {}
+    private readonly userRepository: IUserRepository,
+  ) { }
 
   public async execute(email: string, password: string): Promise<UserResponseDTO> {
     this.logger.log(`Validating user with email: ${email}`);

@@ -1,9 +1,9 @@
 import { UserEntity } from '@modules/user/domain/entity';
-import { USER_REPOSITORY, type UserRepository } from '@modules/user/domain/repository';
+import { USER_REPOSITORY, type IUserRepository } from '@modules/user/domain/repository';
 import { Email } from '@modules/user/domain/value-object';
 import {
   PASSWORD_HASHER,
-  type PasswordHasher,
+  type IPasswordHasher,
 } from '@modules/user/infrastructure/service/password-hasher.service';
 import { CreateUserRequestDTO } from '@modules/user/presentation/dto/request';
 import { CreateUserResponseDTO } from '@modules/user/presentation/dto/response';
@@ -16,10 +16,10 @@ export class CreateUserUseCase {
 
   constructor(
     @Inject(USER_REPOSITORY)
-    private readonly userRepository: UserRepository,
+    private readonly userRepository: IUserRepository,
     @Inject(PASSWORD_HASHER)
-    private readonly passwordHasherService: PasswordHasher,
-  ) {}
+    private readonly passwordHasherService: IPasswordHasher,
+  ) { }
 
   public async execute(request: CreateUserRequestDTO): Promise<CreateUserResponseDTO> {
     const email = Email.create(request.email);

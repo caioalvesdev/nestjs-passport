@@ -1,0 +1,23 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongo-container
+    ports:
+      - '27017:27017'
+
+  # nestjs-app:
+  #   build:
+  #     context: ..
+  #     dockerfile: docker/Dockerfile
+  #   container_name: nestjs-app-container
+  #   ports:
+  #     - '3000:3000'
+  #   depends_on:
+  #     - mongodb
+  #   environment:
+  #     - MONGODB_URI=mongodb://mongodb:27017/nestjs-social-auth-refresh
+  #   env_file:
+  #     - ../.env
+  #   volumes:
+  #     - ..:/app
+  #     - /app/node_modules

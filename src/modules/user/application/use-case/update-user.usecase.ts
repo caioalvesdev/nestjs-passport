@@ -1,7 +1,7 @@
-import { USER_REPOSITORY, type UserRepository } from '@modules/user/domain/repository';
+import { USER_REPOSITORY, type IUserRepository } from '@modules/user/domain/repository';
 import {
   PASSWORD_HASHER,
-  type PasswordHasher,
+  type IPasswordHasher,
 } from '@modules/user/infrastructure/service/password-hasher.service';
 import { UpdateUserRequestDTO } from '@modules/user/presentation/dto/request';
 import { UpdateUserResponseDTO } from '@modules/user/presentation/dto/response';
@@ -13,9 +13,9 @@ export class UpdateUserUseCase {
 
   constructor(
     @Inject(USER_REPOSITORY)
-    private readonly userRepository: UserRepository,
+    private readonly userRepository: IUserRepository,
     @Inject(PASSWORD_HASHER)
-    private readonly passwordHasherService: PasswordHasher,
+    private readonly passwordHasherService: IPasswordHasher,
   ) {}
 
   public async execute(id: string, request: UpdateUserRequestDTO): Promise<UpdateUserResponseDTO> {

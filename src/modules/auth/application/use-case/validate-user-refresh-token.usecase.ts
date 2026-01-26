@@ -1,5 +1,5 @@
 import { UserResponseDTO } from '@modules/auth/presentation/dto/response';
-import { USER_REPOSITORY, type UserRepository } from '@modules/user/domain/repository';
+import { USER_REPOSITORY, type IUserRepository } from '@modules/user/domain/repository';
 import { Inject, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { compare } from 'bcryptjs';
 
@@ -9,8 +9,8 @@ export class ValidateUserRefreshTokenAuthUseCase {
 
   constructor(
     @Inject(USER_REPOSITORY)
-    private readonly userRepository: UserRepository,
-  ) {}
+    private readonly userRepository: IUserRepository,
+  ) { }
 
   public async execute(refreshToken: string, userId: string): Promise<UserResponseDTO> {
     this.logger.log(`Validating refresh token for user ID: ${userId}`);

@@ -1,0 +1,1 @@
+export { SignupAuthRequestDTO } from './signup.request.dto';

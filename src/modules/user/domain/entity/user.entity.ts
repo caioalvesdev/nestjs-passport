@@ -1,5 +1,13 @@
 import { Email } from '@modules/user/domain/value-object';
 
+interface IUserEntityProps {
+  id: string;
+  name: string;
+  email: Email;
+  password: string;
+  refreshToken?: string | null;
+}
+
 export class UserEntity {
   private constructor(
     private readonly id: string,
@@ -9,18 +17,12 @@ export class UserEntity {
     private readonly refreshToken: string | null = null,
   ) {}
 
-  public static create(props: {
-    id: string;
-    name: string;
-    email: Email;
-    password: string;
-    refreshToken?: string | null;
-  }): UserEntity {
+  public static create(props: IUserEntityProps): UserEntity {
     this.validate(props);
     return new UserEntity(props.id, props.name, props.email, props.password, props.refreshToken);
   }
 
-  private static validate(props: { id: string; email: Email; password: string }) {
+  private static validate(props: Pick<IUserEntityProps, 'id' | 'email' | 'password'>): void {
     if (!props.id) throw new Error('ID is required');
     if (!props.email) throw new Error('Email is required');
     if (!props.email.getValue()) throw new Error('Email value is required');

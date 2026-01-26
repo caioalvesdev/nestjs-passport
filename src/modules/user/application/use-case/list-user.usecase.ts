@@ -1,4 +1,4 @@
-import { USER_REPOSITORY, type UserRepository } from '@modules/user/domain/repository';
+import { USER_REPOSITORY, type IUserRepository } from '@modules/user/domain/repository';
 import { ListUserResponseDTO } from '@modules/user/presentation/dto/response';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 
@@ -8,7 +8,7 @@ export class ListUserUseCase {
 
   constructor(
     @Inject(USER_REPOSITORY)
-    private readonly userRepository: UserRepository,
+    private readonly userRepository: IUserRepository,
   ) {}
 
   public async execute(): Promise<Array<ListUserResponseDTO>> {

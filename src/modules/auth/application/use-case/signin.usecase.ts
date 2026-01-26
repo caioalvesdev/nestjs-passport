@@ -1,6 +1,6 @@
 import { ICurrentUser } from '@modules/auth/infrastructure/decorator';
 import { TokenPayload } from '@modules/auth/type/token-payload.interface';
-import { USER_REPOSITORY, type UserRepository } from '@modules/user/domain/repository';
+import { USER_REPOSITORY, type IUserRepository } from '@modules/user/domain/repository';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
@@ -15,21 +15,21 @@ export class SigninAuthUseCase {
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
     @Inject(USER_REPOSITORY)
-    private readonly userRepository: UserRepository,
-  ) {}
+    private readonly userRepository: IUserRepository,
+  ) { }
 
   public async execute(user: ICurrentUser, response: Response): Promise<void> {
     try {
       const expiresAccessToken = new Date();
       expiresAccessToken.setMilliseconds(
         expiresAccessToken.getTime() +
-          parseInt(this.configService.getOrThrow('JWT_ACCESS_TOKEN_EXPIRATION_MS')),
+        parseInt(this.configService.getOrThrow('JWT_ACCESS_TOKEN_EXPIRATION_MS')),
       );
 
       const expiresRefreshToken = new Date();
       expiresRefreshToken.setMilliseconds(
         expiresRefreshToken.getTime() +
-          parseInt(this.configService.getOrThrow('JWT_REFRESH_TOKEN_EXPIRATION_MS')),
+        parseInt(this.configService.getOrThrow('JWT_REFRESH_TOKEN_EXPIRATION_MS')),
       );
 
       const tokenPayload: TokenPayload = {
