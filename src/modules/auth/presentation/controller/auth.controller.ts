@@ -1,4 +1,8 @@
-import { SigninAuthUseCase, CurrentUserUseCase, SignupAuthUseCase } from '@modules/auth/application/use-case';
+import {
+  SigninAuthUseCase,
+  CurrentUserUseCase,
+  SignupAuthUseCase,
+} from '@modules/auth/application/use-case';
 import { IsPublic, CurrentUser, type ICurrentUser } from '@modules/auth/infrastructure/decorator';
 import { LocalAuthGuard, JwtRefreshAuthGuard } from '@modules/auth/infrastructure/guard';
 import { SignupAuthRequestDTO } from '@modules/auth/presentation/dto/request';
@@ -25,15 +29,13 @@ export class AuthController {
     private readonly signinAuthService: SigninAuthUseCase,
     private readonly signupAuthService: SignupAuthUseCase,
     private readonly currentUserUseCase: CurrentUserUseCase,
-  ) { }
+  ) {}
 
   @IsPublic()
   @Post('signup')
   @HttpCode(HttpStatus.CREATED)
   @ApiResponse({ status: HttpStatus.CREATED })
-  public async signup(
-    @Body() response: SignupAuthRequestDTO,
-  ): Promise<void> {
+  public async signup(@Body() response: SignupAuthRequestDTO): Promise<void> {
     return this.signupAuthService.execute(response);
   }
 

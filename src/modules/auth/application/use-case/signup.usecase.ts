@@ -5,13 +5,13 @@ import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class SignupAuthUseCase {
-    private readonly logger: Logger = new Logger(SignupAuthUseCase.name);
+  private readonly logger: Logger = new Logger(SignupAuthUseCase.name);
 
-    constructor(private readonly createUserUseCase: CreateUserUseCase) { }
+  constructor(private readonly createUserUseCase: CreateUserUseCase) {}
 
-    public async execute(request: SignupAuthRequestDTO): Promise<void> {
-        this.logger.log(`Signing up user with email: ${request.email}`);
-        await this.createUserUseCase.execute(CreateUserRequestDTO.toInstance(request));
-        this.logger.log(`User with email: ${request.email} successfully signed up`);
-    }
+  public async execute(request: SignupAuthRequestDTO): Promise<void> {
+    this.logger.log(`Signing up user with email: ${request.email}`);
+    await this.createUserUseCase.execute(CreateUserRequestDTO.toInstance(request));
+    this.logger.log(`User with email: ${request.email} successfully signed up`);
+  }
 }

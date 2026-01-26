@@ -8,7 +8,7 @@ export class CurrentUserUseCase {
   constructor(
     @Inject(USER_REPOSITORY)
     private readonly userRepository: IUserRepository,
-  ) { }
+  ) {}
 
   public async execute(email: string): Promise<UserResponseDTO> {
     const user = await this.userRepository.findByEmail(Email.create(email));

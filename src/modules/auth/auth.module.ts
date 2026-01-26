@@ -32,4 +32,4 @@ import { PassportModule } from '@nestjs/passport';
     CurrentUserUseCase,
   ],
 })
-export class AuthModule { }
+export class AuthModule {}

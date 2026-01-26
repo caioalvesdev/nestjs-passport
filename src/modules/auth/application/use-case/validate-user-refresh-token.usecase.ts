@@ -10,7 +10,7 @@ export class ValidateUserRefreshTokenAuthUseCase {
   constructor(
     @Inject(USER_REPOSITORY)
     private readonly userRepository: IUserRepository,
-  ) { }
+  ) {}
 
   public async execute(refreshToken: string, userId: string): Promise<UserResponseDTO> {
     this.logger.log(`Validating refresh token for user ID: ${userId}`);

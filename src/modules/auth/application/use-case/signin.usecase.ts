@@ -16,20 +16,20 @@ export class SigninAuthUseCase {
     private readonly jwtService: JwtService,
     @Inject(USER_REPOSITORY)
     private readonly userRepository: IUserRepository,
-  ) { }
+  ) {}
 
   public async execute(user: ICurrentUser, response: Response): Promise<void> {
     try {
       const expiresAccessToken = new Date();
       expiresAccessToken.setMilliseconds(
         expiresAccessToken.getTime() +
-        parseInt(this.configService.getOrThrow('JWT_ACCESS_TOKEN_EXPIRATION_MS')),
+          parseInt(this.configService.getOrThrow('JWT_ACCESS_TOKEN_EXPIRATION_MS')),
       );
 
       const expiresRefreshToken = new Date();
       expiresRefreshToken.setMilliseconds(
         expiresRefreshToken.getTime() +
-        parseInt(this.configService.getOrThrow('JWT_REFRESH_TOKEN_EXPIRATION_MS')),
+          parseInt(this.configService.getOrThrow('JWT_REFRESH_TOKEN_EXPIRATION_MS')),
       );
 
       const tokenPayload: TokenPayload = {

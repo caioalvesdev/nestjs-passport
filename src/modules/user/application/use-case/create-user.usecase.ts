@@ -19,7 +19,7 @@ export class CreateUserUseCase {
     private readonly userRepository: IUserRepository,
     @Inject(PASSWORD_HASHER)
     private readonly passwordHasherService: IPasswordHasher,
-  ) { }
+  ) {}
 
   public async execute(request: CreateUserRequestDTO): Promise<CreateUserResponseDTO> {
     const email = Email.create(request.email);

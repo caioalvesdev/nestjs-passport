@@ -11,7 +11,7 @@ export class ValidateUserAuthUseCase {
   constructor(
     @Inject(USER_REPOSITORY)
     private readonly userRepository: IUserRepository,
-  ) { }
+  ) {}
 
   public async execute(email: string, password: string): Promise<UserResponseDTO> {
     this.logger.log(`Validating user with email: ${email}`);

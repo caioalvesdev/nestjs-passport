@@ -43,4 +43,4 @@ import { MongooseModule } from '@nestjs/mongoose';
   ],
   exports: [USER_REPOSITORY, FindUserUseCase, CreateUserUseCase],
 })
-export class UsersModule { }
+export class UsersModule {}

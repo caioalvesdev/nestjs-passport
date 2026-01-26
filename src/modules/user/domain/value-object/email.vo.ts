@@ -1,5 +1,5 @@
 export class Email {
-  private constructor(private readonly value: string) { }
+  private constructor(private readonly value: string) {}
 
   public static create(value: string): Email {
     this.validate(value);
