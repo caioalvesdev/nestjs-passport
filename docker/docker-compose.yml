@@ -20,7 +20,6 @@ services:
       - ../.env
     volumes:
       - ..:/app
-      - /app/node_modules
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.nuxt.rule=Host(`api.realmtech.cloud`)'
