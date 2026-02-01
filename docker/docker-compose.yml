@@ -20,11 +20,11 @@ services:
       - ../.env
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.nuxt.rule=Host(`api.realmtech.cloud`)'
-      - 'traefik.http.routers.nuxt.entrypoints=websecure'
+      - 'traefik.http.routers.nestjs.rule=Host(`api.realmtech.cloud`)'
+      - 'traefik.http.routers.nestjs.entrypoints=websecure'
       # - "traefik.http.routers.nuxt.tls.certresolver=wildcard"
-      - 'traefik.http.routers.nuxt.tls.certresolver=default'
-      - 'traefik.http.services.nuxt.loadbalancer.server.port=3001'
+      - 'traefik.http.routers.nestjs.tls.certresolver=default'
+      - 'traefik.http.services.nestjs.loadbalancer.server.port=3001'
       - 'traefik.docker.network=traefik'
     logging:
       driver: 'json-file'
