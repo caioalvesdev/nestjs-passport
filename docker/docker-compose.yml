@@ -11,7 +11,7 @@ services:
       dockerfile: docker/Dockerfile
     container_name: nestjs-app
     ports:
-      - '3000:3000'
+      - '3001:3001'
     depends_on:
       - mongodb
     environment:
@@ -22,21 +22,20 @@ services:
       - ..:/app
       - /app/node_modules
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.nuxt.rule=Host(`api.realmtech.cloud`)"
-      - "traefik.http.routers.nuxt.entrypoints=websecure"
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.nuxt.rule=Host(`api.realmtech.cloud`)'
+      - 'traefik.http.routers.nuxt.entrypoints=websecure'
       # - "traefik.http.routers.nuxt.tls.certresolver=wildcard"
-      - "traefik.http.routers.nuxt.tls.certresolver=default"
-      - "traefik.http.services.nuxt.loadbalancer.server.port=3000"
-      - "traefik.docker.network=traefik"
+      - 'traefik.http.routers.nuxt.tls.certresolver=default'
+      - 'traefik.http.services.nuxt.loadbalancer.server.port=3001'
+      - 'traefik.docker.network=traefik'
     logging:
-      driver: "json-file"
+      driver: 'json-file'
       options:
-        max-size: "10m"
-        max-file: "3"
+        max-size: '10m'
+        max-file: '3'
     networks:
       - traefik
-
 
 networks:
   traefik:
