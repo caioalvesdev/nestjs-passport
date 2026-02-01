@@ -8,7 +8,15 @@ export class AppConfig {
   public static async configure(app: INestApplication): Promise<void> {
     app.setGlobalPrefix('api');
     app.enableVersioning({ type: VersioningType.URI, defaultVersion: '1' });
-    app.enableCors();
+    app.enableCors({
+      origin: (origin, callback) => {
+        const isAllowed = /^https:\/\/.*\.app\.realmtech\.cloud$/.test(origin);
+        callback(null, isAllowed);
+      },
+      credentials: true,
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+      allowedHeaders: ['Content-Type', 'Authorization', 'Authentication', 'Refresh'],
+    });
     app.use(helmet());
     app.use(cookieParser());
     await app.listen(process.env.PORT ?? 3000);
