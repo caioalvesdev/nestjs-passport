@@ -1,23 +1,43 @@
 services:
   mongodb:
     image: mongo:latest
-    container_name: mongo-container
+    container_name: mongodb
     ports:
       - '27017:27017'
 
-  # nestjs-app:
-  #   build:
-  #     context: ..
-  #     dockerfile: docker/Dockerfile
-  #   container_name: nestjs-app-container
-  #   ports:
-  #     - '3000:3000'
-  #   depends_on:
-  #     - mongodb
-  #   environment:
-  #     - MONGODB_URI=mongodb://mongodb:27017/nestjs-social-auth-refresh
-  #   env_file:
-  #     - ../.env
-  #   volumes:
-  #     - ..:/app
-  #     - /app/node_modules
+  nestjs-app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: nestjs-app
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongodb
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/nestjs-social-auth-refresh
+    env_file:
+      - ../.env
+    volumes:
+      - ..:/app
+      - /app/node_modules
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nuxt.rule=Host(`api.realmtech.cloud`)"
+      - "traefik.http.routers.nuxt.entrypoints=websecure"
+      # - "traefik.http.routers.nuxt.tls.certresolver=wildcard"
+      - "traefik.http.routers.nuxt.tls.certresolver=default"
+      - "traefik.http.services.nuxt.loadbalancer.server.port=3000"
+      - "traefik.docker.network=traefik"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - traefik
+
+
+networks:
+  traefik:
+    external: true
