@@ -12,6 +12,15 @@ import {
 export class EnvironmentVariablesConfig {
   @Expose()
   @IsNotEmpty()
+  @IsString()
+  public readonly PORT!: string;
+
+  @Expose()
+  @IsString()
+  public readonly NODE_ENV?: string;
+
+  @Expose()
+  @IsNotEmpty()
   @Matches(/^mongodb:\/\/.+:\d+\/.+$/, {
     message: 'MONGODB_URI must be a valid MongoDB connection string',
   })
